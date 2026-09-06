@@ -13,9 +13,14 @@ Built and running natively on **Raspberry Pi OS Bookworm (64-bit)**, verified
 on a Raspberry Pi 4 Model B. The same 64-bit image and build also target the
 Pi 3 and Pi 5.
 
-![rPlay mirroring an iPhone on a Raspberry Pi 4](images/rplay-rpi4-mirroring.png)
+![rPlay mirroring an iPhone on a Raspberry Pi 4](images/rplay-rpi4-fullscreen.png)
 
-*iPhone 13 mirroring to a Pi 4 at 534×1080.*
+*The whole Pi desktop: the rPlay window, the live iPhone mirror at 534×1080,
+and the tool rail for pin, home, screenshot, record and input.*
+
+![The rPlay window while mirroring](images/rplay-rpi4-mirroring.png)
+
+*The receiver window on its own.*
 
 ![rPlay idle on Raspberry Pi OS](images/rplay-rpi4-idle.png)
 
