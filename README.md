@@ -67,9 +67,8 @@ mirroring at 50 ms on an x86 PC.
 - **Video streaming** from apps (YouTube and similar), decoded on the Pi —
   including ad breaks, seeking and autoplay to the next video
 - **AirPlay audio**, with or without video
-- **Controlling the phone** — mouse, keyboard and touch forwarded over
-  Apple's iAP protocol across a Bluetooth RFCOMM link. Needs the phone paired,
-  a reachable MFi control-license server, and Accessibility → Zoom (or
+- **Controlling the phone** — mouse, keyboard and touch forwarded to the
+  phone over Bluetooth. Needs the phone paired and Accessibility → Zoom (or
   AssistiveTouch) switched on. See the [guide](docs/raspberry-pi.md#5-controlling-the-phone).
 - **USB-cable mirroring** through a separate `rplay_wd` daemon, so a crash
   there cannot take the receiver down

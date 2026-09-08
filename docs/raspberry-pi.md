@@ -32,7 +32,7 @@ does USB mirroring at 50 ms.
 - A display on HDMI, and a desktop session — rPlay opens windows.
 - The Pi and the iPhone on the same network. 5 GHz is worth preferring.
 - For **control** (driving the phone): Bluetooth, plus reachability of an
-  MFi control-license server. See §5.
+  See §5.
 
 A Pi 5 has no hardware H.264 decoder and has not been tested. A Pi 3 has
 not been tested and will likely be short of both CPU and memory.
@@ -105,43 +105,18 @@ bluetoothctl info <phone-mac>
 You want `Paired: yes`, `Trusted: yes`, and the service
 `00000000-deca-fade-deca-deafdecacafe` — Apple's iAP accessory UUID.
 
-### 5.2 MFi authentication
+### 5.2 Enable a pointer mode on the phone
 
-iAP requires Apple MFi authentication, which rPlay fetches from a
-control-license server. Without a reachable one the log says:
-
-```
-failed to connect to control license server
-Failed to connect to license Server:, unable to control iOS
-[bt_thread] mfiauth_fetch_auth_info -> -1
-```
-
-Mirroring still works; only control is lost. Point rPlay at your server in
-`/etc/rplay/conf`:
-
-```sh
-TARPLAY_MFI_HOST=192.168.1.130
-TARPLAY_MFI_PORT=9010
-```
-
-Check reachability from the Pi:
-
-```sh
-timeout 5 bash -c 'echo > /dev/tcp/<host>/9010' && echo reachable
-```
-
-Working looks like `mfiauth_fetch_auth_info -> 0`, then
-`pair_bluetooth_device -> true`, then the touchscreen descriptor
-registering.
-
-### 5.3 Enable a pointer mode on the phone
-
-For touches to register, iOS needs an Accessibility pointer:
+For touches to register, iOS needs an Accessibility pointer switched on:
 
 **Settings → Accessibility → Zoom → ON** (AssistiveTouch also works).
 
 rPlay shows a reminder dialog about this the first time control becomes
 active. Set `RPLAY_IAP_TOUCH_NO_REMINDER=1` in `/etc/rplay/conf` once you know.
+
+If control is unavailable in your build, mirroring, audio and video fling all
+work as normal — only mouse, keyboard and touch input are affected.
+
 
 ## 6. Mirroring over a USB cable
 
@@ -178,7 +153,6 @@ it belongs to `graphical.target`, not `multi-user.target`.
 | `RPLAY_AUDIO_DEVICE` | ALSA output. `hw:0` = HDMI, `plughw:2` = 3.5 mm jack |
 | `RPLAY_NAME` | Name in the iPhone's AirPlay list. A name set in the GUI wins; with neither it is `rPlay` |
 | `RPLAY_PROXY_IDLE_MS` | Segment-fetch timeout. Raise to 2500 on slow Wi-Fi |
-| `TARPLAY_MFI_HOST` / `_PORT` | MFi control-license server |
 | `RPLAY_USB_MIRROR` | Start with the USB mirror enabled |
 | `RPLAY_SW_RENDER` | `0` forces the accelerated renderer |
 | `RPLAY_IAP_TOUCH_NO_REMINDER` | Suppress the Zoom reminder dialog |
@@ -197,7 +171,7 @@ most common:
   grabbed it. Run `usb-host-services.sh disable`, then replug.
 - **Phone does not see rPlay** — click Start; rPlay is silent until you do.
   Check `rplay-mdnsd` owns 5353: `sudo ss -lunp | grep 5353`.
-- **Control does nothing** — see §5. Almost always MFi or the Zoom setting.
+- **Control does nothing** — see §5. Almost always Bluetooth pairing or the Zoom setting.
 
 ## 10. Known issues
 

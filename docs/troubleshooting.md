@@ -49,40 +49,27 @@ AirPlay on a Pi; USB mirroring is fine on an x86 PC.
 
 ## Mouse and keyboard do not control the phone
 
-The mirror works but the phone ignores you, and the log says:
+The mirror works but the phone ignores you.
 
-```
-failed to connect to control license server
-Failed to connect to license Server:, unable to control iOS
-[bt_thread] mfiauth_fetch_auth_info -> -1
-```
+Two things have to be in place, and both are easy to miss.
 
-Driving the phone uses Apple's iAP protocol, which requires MFi
-authentication. rPlay fetches that from a control-license server, and
-without one the phone will not accept input — mirroring is unaffected.
-
-If your licence server is on your own network, point rPlay at it in
-`/etc/rplay/conf`:
+**The phone must be paired over Bluetooth.** Pair it from your desktop's
+Bluetooth settings, then check it:
 
 ```sh
-TARPLAY_MFI_HOST=192.168.1.130
-TARPLAY_MFI_PORT=9010
+bluetoothctl info <phone-mac>
 ```
 
-Check it is reachable from the machine running rPlay:
+You want `Paired: yes`, `Trusted: yes`, and the service
+`00000000-deca-fade-deca-deafdecacafe` — Apple's iAP accessory service.
 
-```sh
-timeout 5 bash -c 'echo > /dev/tcp/<host>/9010' && echo reachable
-```
+**iOS needs an Accessibility pointer switched on**, or it ignores forwarded
+touches entirely:
 
-When it works the log reads `mfiauth_fetch_auth_info -> 0`, followed by
-`pair_bluetooth_device -> true` and the touchscreen descriptor
-registering.
+**Settings → Accessibility → Zoom → ON** (AssistiveTouch also works).
 
-The phone must also be paired over Bluetooth first — pair it from your
-desktop's Bluetooth settings, and check with
-`bluetoothctl info <mac>` that it shows `Paired: yes` and advertises
-`00000000-deca-fade-deca-deafdecacafe`, Apple's iAP service.
+If control is unavailable in your build, mirroring, audio and video fling are
+unaffected — only mouse, keyboard and touch input are.
 
 ## Audio comes out of the wrong output
 
