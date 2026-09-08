@@ -8,10 +8,10 @@ all.
 
 ### ⬇ Download
 
-**[rplay_0.4.1_arm64.deb](https://github.com/rPlayAI/rplay-linux/releases/latest)** — Raspberry Pi OS Bookworm, 64-bit
+**[rplay_0.4.2_arm64.deb](https://github.com/rPlayAI/rplay-linux/releases/latest)** — Raspberry Pi OS Bookworm, 64-bit
 
 ```sh
-sudo apt-get install -y ./rplay_0.4.1_arm64.deb
+sudo apt-get install -y ./rplay_0.4.2_arm64.deb
 /opt/rplay/bin/rplay
 ```
 
@@ -101,10 +101,9 @@ The result is packaged as an `arm64` `.deb`.
 - **Occasional brief hiccup** — a ~400 ms stall turns up roughly once every
   few minutes in some sessions and not at all in others. Cause not yet
   identified.
-- **Rapid video switching in some apps** can leave the phone's transport
-  controls out of step — a Play button while the video plays. Tapping resyncs
-  it. Apps that insert several queue items at once (iQiyi) can also land on a
-  different item than the one picked.
+- **Some app content served from the phone itself does not play.** iQiyi
+  serves certain items from the handset; those fail to open and are skipped,
+  so playback advances to the next item rather than stalling.
 - **First USB pairing needs a replug**, and reconnecting after an unplug can
   leave the mirror dead.
 
