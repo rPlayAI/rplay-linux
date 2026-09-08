@@ -122,6 +122,13 @@ Open an issue and include:
 4. The receiver log: `/opt/rplay/bin/rplay 2>&1 | tee /tmp/rplay.log`
 5. `/opt/rplay/bin/usb-host-services.sh status`
 
+## Licence
+
+**For personal use only** — free to use on hardware you own, for your own
+non-commercial purposes. No redistribution, resale, bundling or commercial use
+without written permission. Provided as is, without warranty. See
+[LICENSE](LICENSE).
+
 ## Status
 
 Early, and published for a first round of testing. Mirroring, audio, control,
