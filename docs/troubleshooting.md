@@ -49,27 +49,15 @@ AirPlay on a Pi; USB mirroring is fine on an x86 PC.
 
 ## Mouse and keyboard do not control the phone
 
-The mirror works but the phone ignores you.
+The mirror works but the phone ignores you. Check both of these:
 
-Two things have to be in place, and both are easy to miss.
+1. The iPhone is **paired** with this machine in its Bluetooth settings.
+2. On the phone, **Settings → Accessibility → Zoom** is ON (AssistiveTouch
+   also works). Without one of them iOS ignores the forwarded touches.
 
-**The phone must be paired over Bluetooth.** Pair it from your desktop's
-Bluetooth settings, then check it:
-
-```sh
-bluetoothctl info <phone-mac>
-```
-
-You want `Paired: yes`, `Trusted: yes`, and the service
-`00000000-deca-fade-deca-deafdecacafe` — Apple's iAP accessory service.
-
-**iOS needs an Accessibility pointer switched on**, or it ignores forwarded
-touches entirely:
-
-**Settings → Accessibility → Zoom → ON** (AssistiveTouch also works).
-
-If control is unavailable in your build, mirroring, audio and video fling are
+If control is still unavailable, mirroring, audio and video fling are
 unaffected — only mouse, keyboard and touch input are.
+
 
 ## Audio comes out of the wrong output
 

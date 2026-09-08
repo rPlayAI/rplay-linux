@@ -31,8 +31,7 @@ does USB mirroring at 50 ms.
 - Raspberry Pi 4 (2 GB or more) running Raspberry Pi OS Bookworm, 64-bit.
 - A display on HDMI, and a desktop session — rPlay opens windows.
 - The Pi and the iPhone on the same network. 5 GHz is worth preferring.
-- For **control** (driving the phone): Bluetooth, plus reachability of an
-  See §5.
+- For **control features**: see §5.
 
 A Pi 5 has no hardware H.264 decoder and has not been tested. A Pi 3 has
 not been tested and will likely be short of both CPU and memory.
@@ -89,34 +88,24 @@ handling** button. Or by hand:
 /opt/rplay/bin/usb-host-services.sh enable     # put it back
 ```
 
-## 5. Controlling the phone
+## 5. Control features
 
-Mouse, keyboard and touch on the mirror window are forwarded to the phone
-over Apple's iAP protocol. Two things must be in place.
+Alongside mirroring, you can drive the phone from the machine's mouse and
+keyboard — click, scroll and type on the mirror window and the phone responds.
 
-### 5.1 Bluetooth pairing
+Two things to set up first:
 
-Pair the iPhone from the Pi's Bluetooth settings. Check it:
+1. **Pair the iPhone with the Pi** from the Pi's Bluetooth settings.
+2. **On the phone, turn on Settings → Accessibility → Zoom.**
+   (AssistiveTouch also works.) Without one of these, iOS ignores the
+   forwarded touches.
 
-```sh
-bluetoothctl info <phone-mac>
-```
+rPlay reminds you about step 2 the first time control becomes active. Once you
+know, set `RPLAY_IAP_TOUCH_NO_REMINDER=1` in `/etc/rplay/conf` to stop the
+reminder.
 
-You want `Paired: yes`, `Trusted: yes`, and the service
-`00000000-deca-fade-deca-deafdecacafe` — Apple's iAP accessory UUID.
-
-### 5.2 Enable a pointer mode on the phone
-
-For touches to register, iOS needs an Accessibility pointer switched on:
-
-**Settings → Accessibility → Zoom → ON** (AssistiveTouch also works).
-
-rPlay shows a reminder dialog about this the first time control becomes
-active. Set `RPLAY_IAP_TOUCH_NO_REMINDER=1` in `/etc/rplay/conf` once you know.
-
-If control is unavailable in your build, mirroring, audio and video fling all
-work as normal — only mouse, keyboard and touch input are affected.
-
+If control is not available, mirroring, audio and video fling are unaffected —
+only mouse, keyboard and touch input are.
 
 ## 6. Mirroring over a USB cable
 
@@ -154,8 +143,8 @@ it belongs to `graphical.target`, not `multi-user.target`.
 | `RPLAY_NAME` | Name in the iPhone's AirPlay list. A name set in the GUI wins; with neither it is `rPlay` |
 | `RPLAY_PROXY_IDLE_MS` | Segment-fetch timeout. Raise to 2500 on slow Wi-Fi |
 | `RPLAY_USB_MIRROR` | Start with the USB mirror enabled |
+| `RPLAY_IAP_TOUCH_NO_REMINDER` | Stop the control reminder dialog |
 | `RPLAY_SW_RENDER` | `0` forces the accelerated renderer |
-| `RPLAY_IAP_TOUCH_NO_REMINDER` | Suppress the Zoom reminder dialog |
 | `RPLAY_H264_DECODER` | Hardware decode opt-in — **not usable yet**, see §10 |
 
 Audio note: without `RPLAY_AUDIO_DEVICE`, ALSA's `default` defers to
@@ -171,7 +160,7 @@ most common:
   grabbed it. Run `usb-host-services.sh disable`, then replug.
 - **Phone does not see rPlay** — click Start; rPlay is silent until you do.
   Check `rplay-mdnsd` owns 5353: `sudo ss -lunp | grep 5353`.
-- **Control does nothing** — see §5. Almost always Bluetooth pairing or the Zoom setting.
+- **Control does nothing** — see §5.
 
 ## 10. Known issues
 
