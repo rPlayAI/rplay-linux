@@ -8,10 +8,10 @@ all.
 
 ### ⬇ Download
 
-**[rplay_0.4.2_arm64.deb](https://github.com/rPlayAI/rplay-linux/releases/latest)** — Raspberry Pi OS Bookworm, 64-bit
+**[rplay_0.5.0_arm64.deb](https://github.com/rPlayAI/rplay-linux/releases/latest)** — Raspberry Pi OS Bookworm, 64-bit
 
 ```sh
-sudo apt-get install -y ./rplay_0.4.2_arm64.deb
+sudo apt-get install -y ./rplay_0.5.0_arm64.deb
 /opt/rplay/bin/rplay
 ```
 
@@ -93,10 +93,12 @@ The result is packaged as an `arm64` `.deb`.
 
 ## Known issues
 
-- **Hardware H.264 decode does not work.** The Pi's `h264_v4l2m2m` decoder
-  runs but manages ~2.6 fps against 19 for software decode, and saves no
-  measurable CPU. Leave `RPLAY_H264_DECODER` unset. This is the main thing
-  being worked on — software decode is what the numbers above are.
+- **Do not enable hardware H.264 decode.** `h264_v4l2m2m` opens the device and
+  negotiates correctly, then produces no frames — the mirror stays black — and
+  closing that window has hard-locked a Pi outright. The driver is fine (the
+  same stream decodes at 4.6× realtime from the command line), so this is ours
+  to fix and it is not fixed yet. Leave `RPLAY_H264_DECODER` unset; software
+  decode is what the numbers above are.
 - **USB mirroring is slow on a Pi** (~480 ms), for the reason above.
 - **Occasional brief hiccup** — a ~400 ms stall turns up roughly once every
   few minutes in some sessions and not at all in others. Cause not yet
