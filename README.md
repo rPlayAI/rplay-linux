@@ -8,10 +8,14 @@ all.
 
 ### ⬇ Download
 
-**[rplay_0.5.0_arm64.deb](https://github.com/rPlayAI/rplay-linux/releases/latest)** — Raspberry Pi OS Bookworm, 64-bit
+**[Latest release](https://github.com/rPlayAI/rplay-linux/releases/latest)** — Raspberry Pi (arm64) and Ubuntu / x86-64
 
 ```sh
+# Raspberry Pi OS Bookworm, 64-bit
 sudo apt-get install -y ./rplay_0.5.0_arm64.deb
+# Ubuntu / Debian, x86-64
+sudo apt-get install -y ./rplay_0.5.0_amd64.deb
+
 /opt/rplay/bin/rplay
 ```
 
@@ -55,6 +59,10 @@ stopwatch against a running timer on the phone:
 
 40–60 ms over Wi-Fi is low enough that scrolling and typing feel attached to
 the mouse rather than lagging behind it.
+
+On **x86-64** both of the Pi's trade-offs go away: the accelerated renderer
+does the scaling, so the mirror is filtered rather than point-sampled, and
+USB mirroring runs at about 50 ms instead of ~480 ms.
 
 **On a Pi, use AirPlay rather than USB.** USB delivers a near-native
 888×1920 stream — 2.9× the pixels — and a Cortex-A72 cannot software-decode
